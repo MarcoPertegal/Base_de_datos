@@ -26,19 +26,38 @@ WHERE age(llegada, salida) >= ALL
 ORDER BY TO_CHAR(v.salida, 'ID');
 
 --2
+SELECT c.nombre, apellido1, apellido2,
+		d.nombre, d.ciudad, 
+		SUM(
+			COALESCE(precio * 
+					 (1 - (descuento::numeric/100)),
+						precio)
+			) as "gasto_por_cliente"
+FROM cliente c JOIN reserva USING (id_cliente)
+		JOIN vuelo v USING (id_vuelo)
+		JOIN aeropuerto d 
+			ON (d.id_aeropuerto = desde)
+GROUP BY c.id_cliente,c.nombre, apellido1, apellido2,
+		v.desde, d.nombre, d.ciudad
+HAVING SUM(
+			COALESCE(precio * 
+					 (1 - (descuento::numeric/100)),
+						precio)
+			) >= ALL (
+						SELECT SUM(
+							COALESCE(precio * 
+									 (1 - (descuento::numeric/100)),
+										precio)
+							)
+						FROM vuelo v2 JOIN
+							reserva USING (id_vuelo)
+						WHERE v.desde = v2.desde
+						GROUP BY id_cliente, v2.desde
+			)
+ORDER BY gasto_por_cliente DESC;
 
 
 				 
 --2
-SELECT c1.nombre, a1.nombre, cuidad, SUM(precio) as "cantidad"
-FROM cliente JOIN reserva USING(id_cliente)
-			JOIN vuelo USING (id_vuelo)
-			JOIN aeropuerto a1 ON (desde = a1.id_aeropuerto)
-			JOIN aeropuerto a2 ON (hasta = a2.id_aeropuerto)
-WHERE cantidad >= ALL(SELECT MAX(cantidad)
-						FROM cliente JOIN reserva USING(id_cliente)
-						JOIN vuelo USING (id_vuelo)
-						JOIN aeropuerto a1 ON (desde = a1.id_aeropuerto)
-						JOIN aeropuerto a2 ON (hasta = a2.id_aeropuerto)
-					 	WHERE a1.nombre)
+
 						
