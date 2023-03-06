@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS usuario CASCADE; 
-DROP TABLE IF EXISTS estaciones CASCADE;
+DROP TABLE IF EXISTS estacion CASCADE;
 DROP TABLE IF EXISTS bicicleta CASCADE;
 DROP TABLE IF EXISTS uso CASCADE; 
 
@@ -10,18 +10,21 @@ CREATE TABLE usuario(
 	direccion			VARCHAR,
 	telefono			SMALLINT NOT NULL,
 	email				VARCHAR NOT NULL,
-	passw				VARCHAR(8),
-	saldo_disponible 	numeric NOT NULL CONSTRAINT SET DEFAULT 0,
-	CONSTRAINT pk_usuario PRIMARY KEY (dni)
+	passw				VARCHAR ,
+	saldo_disponible 	numeric NOT NULL DEFAULT 0,
+	CONSTRAINT pk_usuario PRIMARY KEY (dni),
+	CONSTRAINT ck_usuarios_sin_espacios CHECK (passw NOT LIKE '% %'),
+	CONSTRAINT ck_de_4_a_8 CHECK (LENGTH (passw) BETWEEN 4 AND 8)
 );
 
 CREATE TABLE estacion(
-	cod_estacion		VARCHAR CHECK ('e%'),
+	cod_estacion		VARCHAR,
 	num_estacion 		SERIAL NOT NULL,
 	direccion			VARCHAR	NOT NULL,
 	latitud 			NUMERIC NOT NULL,
 	longitud			NUMERIC NOT NULL,
-	CONSTRAINT pk_estacion PRIMARY KEY (cod_estacion)
+	CONSTRAINT pk_estacion PRIMARY KEY (cod_estacion),
+	CONSTRAINT ck_estaciones_pore CHECK (cod_estacion ILIKE 'e%')
 );
 
 CREATE TABLE bicicleta(

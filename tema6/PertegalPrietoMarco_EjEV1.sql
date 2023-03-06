@@ -7,38 +7,38 @@ DROP TABLE IF EXISTS asistencia_act DROP ON CASCADE;
 CREATE TABLE docente(
 	dni 			VARCHAR,
 	nombre			VARCHAR,
-	telefono		SMALLINT,
-	anioIngreso		INTERVAL,
+	telefono		VARCHAR,
+	anioIngreso		VARCHAR,
 	CONSTRAINT pk_docente PRIMARY KEY (dni)
 );
 
 CREATE TABLE actividades(
-	idAct			SMALLSERIAL,
+	idAct			INT,
 	nombre			VARCHAR,
-	duracion		INTERVAL,
+	duracion		INT,
 	CONSTRAINT pk_actividades PRIMARY KEY (idAct)
 );
 
 CREATE TABLE alumno(
-	cod_alumno		SERIAL,
+	cod_alumno		INT,
 	nombre			VARCHAR,
-	telefono		SMALLINT(10),
-	nivel			smallint,
+	telefono		VARCHAR,
+	nivel			VARCHAR,
 	CONSTRAINT pk_alumno PRIMARY KEY (cod_alumno)
 );
 
 CREATE TABLE asignacion_act(
-	idDoc			SMALLSERIAL,
-	idAct			SMALLINT,
+	idDoc			VARCHAR,
+	idAct			INT,
 	diaSemana		VARCHAR,
-	hora			date,
+	hora			INT,
 	CONSTRAINT pk_asignacion_act PRIMARY KEY (idDoc, idAct, diaSemana, hora)
 );
 
 CREATE TABLE asistencia_act(
-	idAlum			INTEGER,
-	idAct			SMALLINT,
-	idDoc 			SMALLINT,
+	idAlum			INT,
+	idAct			INT,
+	idDoc 			VARCHAR,
 	CONSTRAINT pk_asistencia_act PRIMARY KEY (idAlum, idAct)
 );
 
