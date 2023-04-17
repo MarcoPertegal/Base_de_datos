@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS motocicleta CASCADE;
 CREATE TABLE cliente(
 	codCliente			SERIAL,
 	nombre				VARCHAR,
-	esPremium			BOOLEAN
+	esPremium			BOOLEAN,
 	CONSTRAINT pk_cliente PRIMARY KEY (codCliente)
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE lineaDeVenta(
 	codVenta 			INTEGER,
 	lineaCod			INTEGER,
 	pvp					NUMERIC(9,2),
-	numBastidor			INTEGER,
+	numBastidor			VARCHAR,
 	CONSTRAINT pk_lienaDeVenta PRIMARY KEY (codVenta, lineaCod)
 );
 
@@ -47,10 +47,10 @@ CREATE TABLE motocicleta(
 );
 
 ALTER TABLE venta
-ADD CONSTRAINT fk_venta_cliente FOREIGN KEY (codCliente) REFERENCES cliente ON DELETE SET NULL;
+ADD CONSTRAINT fk_venta_cliente FOREIGN KEY (codCliente) REFERENCES cliente ON DELETE CASCADE;
 
 AlTER TABLE lineaDeVenta
-ADD CONSTRAINT fk_lineaDeVenta_venta FOREIGN KEY (codVenta) REFERENCES venta ON DELETE CASCADE;
+ADD CONSTRAINT fk_lineaDeVenta_venta FOREIGN KEY (codVenta) REFERENCES venta;
 
 AlTER TABLE vehiculo
 ADD CONSTRAINT fk_vehiculo_lineaDeVenta FOREIGN KEY (numeroBastidor) REFERENCES lineaDeVenta;
@@ -59,7 +59,7 @@ AlTER TABLE coche
 ADD CONSTRAINT fk_coche_vehiculo FOREIGN KEY (numeroBastidor) REFERENCES vehiculo ON DELETE CASCADE;
 
 AlTER TABLE motocicleta
-ADD CONSTRAINT fk_motocicleta_vehiculo FOREIGN KEY (numeroBastidor) REFERENCES vehiculo ON DELETE CASCADE;
+ADD CONSTRAINT fk_motocicleta_vehiculo FOREIGN KEY (numeroBastidor) REFERENCES vehiculo ON DELETE CASCADE;--cuando hay herencia siemprre cascada, 
 
 
 INSERT INTO cliente(nombre, esPremium)VALUES
@@ -70,3 +70,7 @@ INSERT INTO venta( fecha)VALUES
 
 INSERT INTO lineaDeVenta(lineaCod, pvp, numeroBastidor)VALUES
 	(111111, 23000, '132414adc');
+
+INSERT INTO vehiculo (numBastidor, fechaFabricacion, metricula) VALUES
+	('v123456765', '2023-04-01'::date, '01234zzz');
+

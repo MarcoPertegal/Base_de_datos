@@ -1,0 +1,16 @@
+package com.salesianostriana.dam.ejemplo01holamundo;
+
+import org.springframework.stereotype.Controller;
+
+//esta clase va a tener los controladores de las peticiones del navegador
+//los controladores son metodos que van a atender peticiones 
+
+@Controller
+public class ControladorSaludo {
+	
+	//hay que decirle que tipo de peticion va a atender, la url
+	@GetMapping("welcome")
+	public String welcome() {
+		
+	}
+}
