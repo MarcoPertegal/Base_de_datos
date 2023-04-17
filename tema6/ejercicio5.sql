@@ -19,22 +19,38 @@ CREATE TABLE empresa(
 	cif					VARCHAR,
 	nombre				VARCHAR,
 	direccion			VARCHAR,
+<<<<<<< HEAD
+	telefono			SMALLINT,
+=======
 	telefono			VARCHAR(12),
+>>>>>>> 8871ac3ef26f8187689ed3350e6c82966af70096
 	CONSTRAINT pk_empresa PRIMARY KEY (cif)
 );
 
 CREATE TABLE alumnos_asisten(
 	dni					VARCHAR(9),
+<<<<<<< HEAD
+	n_concreto			VARCHAR,
+=======
 	n_concreto			INTEGER,
+>>>>>>> 8871ac3ef26f8187689ed3350e6c82966af70096
 	CONSTRAINT pk_alumnos_asisten PRIMARY KEY (dni, n_concreto)
 );
 
 CREATE TABLE curso(
+<<<<<<< HEAD
+	n_concreto			VARCHAR,
+	fecha_inicio		DATE,
+	fecha_fin			DATE,
+	dni_profesor		VARCHAR,
+	tipo_curso			INT,
+=======
 	n_concreto			INTEGER,
 	fecha_inicio		DATE,
 	fecha_fin			DATE,
 	dni_profesor		VARCHAR,
 	tipo_curso			SMALLINT,
+>>>>>>> 8871ac3ef26f8187689ed3350e6c82966af70096
 	CONSTRAINT pk_curso PRIMARY KEY (n_concreto)
 );
 
@@ -42,7 +58,11 @@ CREATE TABLE profesor(
 	dni					VARCHAR(9),
 	nombre				VARCHAR,
 	apellido			VARCHAR,
+<<<<<<< HEAD
+	telefono			SMALLINT,
+=======
 	telefono			VARCHAR,
+>>>>>>> 8871ac3ef26f8187689ed3350e6c82966af70096
 	direccion			SMALLINT,
 	CONSTRAINT pk_profesor PRIMARY KEY (dni)
 );
